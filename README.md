@@ -11,3 +11,6 @@ Getting Started
 2. Edit `web.config` to add your own API User credentials (created on your site, https://<your domain>.chargify.com/settings#chargify-direct)
 3. Create products on your API User's Site with handles 'basic' and 'premium' (or edit the example to match product handles you have)
 4. Run the app
+
+##Demo##
+This code has been deployed to http://chargify-direct-sample.azurewebsites.net/ for your convenience.
