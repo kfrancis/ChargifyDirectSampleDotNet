@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Signup for Acme Projects</h2>
+
+<form class="form-horizontal" method="post" action="https://api.chargify.com/api/v2/signups">
+    <input type="hidden" name="secure[api_id]"    value="@System.Configuration.ConfigurationManager.AppSettings["Chargify.v2.apiKey"]" />
+    <input type="hidden" name="secure[timestamp]" value="@ViewBag.Timestamp" />
+    <input type="hidden" name="secure[nonce]" value="@ViewBag.Nonce" />
+    <input type="hidden" name="secure[data]"      value="redirect_uri=@(Url.Action("Verify", "Home", null, Request.Url.Scheme, null))" />
+    <input type="hidden" name="secure[signature]" value="@Html.GetChargifySignature()" />
+
+    <div class="well">
+        <h5>Select Plan</h5>
+        <div class="control-group">
+            <label class="control-label">Product:</label>
+            <div class="controls">
+                <label class="radio">
+                    <input type="radio" name="signup[product][handle]" id="signup_product_handle_basic" value="basic" @if (ViewData.ContainsKey("product_handle") && ViewBag.product_handle == "basic")
+                                                                                                                      {<text>checked</text>}/>
+                    Basic
+                </label>
+                <label class="radio">
+                    <input type="radio" name="signup[product][handle]" id="signup_product_handle_premium" value="premium" @if (ViewData.ContainsKey("product_handle") && ViewBag.product_handle == "premium")
+                                                                                                                          {<text>checked</text>}/>
+                    Premium
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <h5>Coupon</h5>
+        <div class="control-group">
+            <label class="control-label" for="signup_coupon_code">Coupon Code</label>
+            <div class="controls">
+                <input type="text" name="signup[coupon_code]" id="signup_coupon_code" @if (ViewData.ContainsKey("coupon_code"))
+                                                                                      {<text>value="@ViewBag.coupon_code"</text>} />
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <h5>About You</h5>
+        <div class="control-group">
+            <label class="control-label" for="signup_customer_first_name">First Name</label>
+            <div class="controls">
+                <input type="text" name="signup[customer][first_name]" id="signup_customer_first_name" @if (ViewData.ContainsKey("customer.first_name"))
+                                                                                                       {<text>value="@ViewData["customer.first_name"]"</text>} />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="signup_customer_last_name">Last Name</label>
+            <div class="controls">
+                <input type="text" name="signup[customer][last_name]" id="signup_customer_last_name" @if (ViewData.ContainsKey("customer.last_name"))
+                                                                                                     {<text>value="@ViewData["customer.last_name"]"</text>}/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="signup_customer_email">Email</label>
+            <div class="controls">
+                <input type="text" name="signup[customer][email]" id="signup_customer_email" @if (ViewData.ContainsKey("customer.email"))
+                                                                                             {<text>value="@ViewData["customer.email"]"</text>}/>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <h5>Payment Profile</h5>
+        <div class="control-group">
+            <label class="control-label" for="signup_payment_profile_first_name">First Name on Card</label>
+            <div class="controls">
+                <input type="text" name="signup[payment_profile][first_name]" id="signup_payment_profile_first_name" @if (ViewData.ContainsKey("payment_profile.first_name"))
+                                                                                                                 {<text>value="@ViewData["payment_profile.first_name"]"</text>} />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="signup_payment_profile_first_name">Last Name on Card</label>
+            <div class="controls">
+                <input type="text" name="signup[payment_profile][last_name]" id="signup_payment_profile_last_name" @if (ViewData.ContainsKey("payment_profile.last_name"))
+                                                                                                               {<text>value="@ViewData["payment_profile.last_name"]"</text>} />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="signup_payment_profile_card_number">Card Number</label>
+            <div class="controls">
+                <input type="text" name="signup[payment_profile][card_number]" id="signup_payment_profile_card_number" @if (ViewData.ContainsKey("payment_profile.card_number"))
+                                                                                                                   {<text>value="@ViewData["payment_profile.card_number"]"</text>} />
+            </div>
+        </div>
+        <div class="control-group row">
+            <label class="control-label span1">Expiration</label>
+            <div class="controls">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="signup[payment_profile][expiration_month]" id="signup_payment_profile_expiration_month" style="width:75px;">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <option value="@i" @if (ViewData["payment_profile.expiration_month"] == i.ToString())
+                                           {<text>selected</text>}>@i.ToString("D2")</option>    
+                    }
+                </select>
+                <select name="signup[payment_profile][expiration_year]" id="signup_payment_profile_expiration_year" style="width:140px;">
+                    @for (int i = DateTime.Now.Year; i < DateTime.Now.Year + 10; i++)
+                    {
+                        <option value="@i" @if (ViewData["payment_profile.expiration_year"] == i.ToString())
+                                           {<text>selected</text>}>@i.ToString()</option>    
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        <input class="btn btn-large btn-primary" type="submit" value="Sign Up" />
+    </p>
+</form>

@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Verify";
+}
+
+<h1>Verify</h1>
+
+@if (Request.QueryString.Count <= 0)
+{
+    <p>No params posted back</p>
+}
+else
+{
+    <p>The posted params are:</p>
+    <ul>
+        @foreach (string key in Request.QueryString.Keys)
+        {
+            <li>@key=@Request.QueryString[key]</li>
+        }
+    </ul>
+}
