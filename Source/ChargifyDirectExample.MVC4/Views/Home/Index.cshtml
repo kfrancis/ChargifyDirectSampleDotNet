@@ -32,11 +32,15 @@
 
     <div class="well">
         <h5>Coupon</h5>
-        <div class="control-group">
+        <div id="couponGroup" class="control-group">
             <label class="control-label" for="signup_coupon_code">Coupon Code</label>
             <div class="controls">
-                <input type="text" name="signup[coupon_code]" id="signup_coupon_code" @if (ViewData.ContainsKey("coupon_code"))
-                                                                                      {<text>value="@ViewBag.coupon_code"</text>} />
+                <div class="input-append">
+                    <input class="span2" type="text" name="signup[coupon_code]" id="signup_coupon_code" @if (ViewData.ContainsKey("coupon_code"))
+                                                                                          {<text>value="@ViewBag.coupon_code"</text>} />
+                    <button class="btn" type="button" id="verifyCoupon">Verify!</button>
+                </div>
+                <span class="help-inline">Try 'awesome'</span>
             </div>
         </div>
     </div>
@@ -115,3 +119,34 @@
         <input class="btn btn-large btn-primary" type="submit" value="Sign Up" />
     </p>
 </form>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#verifyCoupon").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("VerifyCoupon")',
+                    data: { 'couponCode': $("#signup_coupon_code").val() },
+                    success: function (msg) {
+                        if (msg.valid === 'true') {
+                            var obj = $('#couponGroup');
+                            obj.removeClass('success warning error');
+                            obj.addClass('success');
+                        } else {
+                            var obj = $('#couponGroup');
+                            obj.removeClass('success warning error');
+                            obj.addClass('warning');
+                        }
+                    },
+                    error: function () {
+                        var obj = $('#couponGroup');
+                        obj.removeClass('success warning error');
+                        obj.addClass('error');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}

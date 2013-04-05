@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ChargifyDirectExample.MVC4.Controllers
@@ -18,9 +16,25 @@ namespace ChargifyDirectExample.MVC4.Controllers
             return View();
         }
 
+        //
+        // GET: /Home/Verify
+
+        /// <summary>
+        /// Called as the redirect from the transparent api call, included in the secure[data].
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Verify()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult VerifyCoupon(string couponCode)
+        {
+            // This is obviously a simple example, but I didn't want to pull in the Chargify.NET library
+            // for just this quick demo.
+            var result = couponCode == "awesome" ? true : false;
+            return Json(new { valid = result.ToString().ToLowerInvariant() }, JsonRequestBehavior.AllowGet);
         }
 
         private long ToUnixTimestamp(DateTime dt)
@@ -28,6 +42,5 @@ namespace ChargifyDirectExample.MVC4.Controllers
             DateTime unixRef = new DateTime(1970, 1, 1, 0, 0, 0);
             return (dt.Ticks - unixRef.Ticks) / 10000000;
         }
-
     }
 }
