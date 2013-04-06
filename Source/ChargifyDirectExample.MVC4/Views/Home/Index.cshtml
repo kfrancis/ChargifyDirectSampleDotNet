@@ -5,11 +5,11 @@
 <h2>Signup for Acme Projects</h2>
 
 <form class="form-horizontal" method="post" action="https://api.chargify.com/api/v2/signups">
-    <input type="hidden" name="secure[api_id]"    value="@System.Configuration.ConfigurationManager.AppSettings["Chargify.v2.apiKey"]" />
-    <input type="hidden" name="secure[timestamp]" value="@ViewBag.Timestamp" />
-    <input type="hidden" name="secure[nonce]" value="@ViewBag.Nonce" />
-    <input type="hidden" name="secure[data]"      value="redirect_uri=@(Url.Action("Verify", "Home", null, Request.Url.Scheme, null))" />
-    <input type="hidden" name="secure[signature]" value="@Html.GetChargifySignature()" />
+    @Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
+        {"redirect_uri", Url.Action("Verify", "Home", null, Request.Url.Scheme, null)},
+        {"nonce", ViewBag.Nonce },
+        {"timestamp", ViewBag.Timestamp.ToString() }
+    }).ToFormInputs())
 
     <div class="well">
         <h5>Select Plan</h5>

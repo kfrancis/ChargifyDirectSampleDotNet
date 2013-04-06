@@ -1,14 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
+using Chargify2;
+using Chargify2.Configuration;
 
 namespace ChargifyDirectExample.MVC4.Helpers
 {
+    public class ChargifyHelper
+    {
+        public static Client Chargify()
+        {
+            return new Client(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"], ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+        }
+    }
+
     public static class ChargifyExtensions
     {
+        public static IDictionary<string, string> ToDictionary(this NameValueCollection source)   
+        {   
+            return source.Cast<string>()  
+                         .Select(s => new { Key = s, Value = source[s] })  
+                         .ToDictionary(p => p.Key, p => p.Value);
+        } 
+
         public static string GetChargifySignature(this HtmlHelper helper)
         {
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);

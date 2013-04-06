@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Chargify2.Configuration;
 
 namespace ChargifyDirectExample.MVC4
 {

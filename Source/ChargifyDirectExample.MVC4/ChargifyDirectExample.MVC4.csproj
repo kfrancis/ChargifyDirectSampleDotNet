@@ -44,6 +44,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Chargify2, Version=1.0.4844.2888, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\chargify2.1.0.0.9\lib\net45\Chargify2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NotFoundMvc">
       <HintPath>..\..\packages\NotFoundMvc.1.0.0\lib\net40\NotFoundMvc.dll</HintPath>
@@ -127,7 +131,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Chargify.cs" />
     <Compile Include="Helpers\ChargifyExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

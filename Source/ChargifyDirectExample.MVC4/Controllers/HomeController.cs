@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using ChargifyDirectExample.MVC4.Helpers;
+using Chargify2;
 
 namespace ChargifyDirectExample.MVC4.Controllers
 {
@@ -27,20 +29,23 @@ namespace ChargifyDirectExample.MVC4.Controllers
         /// <returns></returns>
         public ActionResult Verify()
         {
-            var paramCollection = new FormCollection(Request.QueryString);
-            var chargifyResponse = new ResponseParameters(paramCollection);
+            var h = new Hashtable((IDictionary)Request.QueryString.ToDictionary());
+            var chargifyResponse = ChargifyHelper.Chargify().Direct.ResponseParameters(h);
             if (chargifyResponse.isVerified)
             {
-                var client = new Chargify2(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"]);
-                var call = client.GetCall(chargifyResponse.call_id);
-                if (call.success)
+                var call = ChargifyHelper.Chargify().ReadCall(chargifyResponse.call_id);
+                if (call != null)
                 {
-                    return RedirectToAction("Receipt", new { call_id = call.id });
+                    if (call.success)
+                    {
+                        return RedirectToAction("Receipt", new { call_id = call.id });
+                    }
+                    else
+                    {
+                        return View("Index");
+                    }
                 }
-                else
-                {
-                    return View("Index");
-                }
+                else { return HttpNotFound(); }
             }
             else
             {
@@ -53,8 +58,7 @@ namespace ChargifyDirectExample.MVC4.Controllers
 
         public ActionResult Receipt(string call_id)
         {
-            var client = new Chargify2(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"]);
-            var call = client.GetCall(call_id);
+            var call = ChargifyHelper.Chargify().ReadCall(call_id);
             if (call != null) 
             {
                 return View(call);
