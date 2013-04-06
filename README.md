@@ -20,3 +20,5 @@ Features
 
 ##Demo##
 This code has been deployed to http://chargify-direct-sample.azurewebsites.net/ for your convenience.
+
+For v1 API access, try the [Chargify.NET wrapper](http://chargify.codeplex.com).
