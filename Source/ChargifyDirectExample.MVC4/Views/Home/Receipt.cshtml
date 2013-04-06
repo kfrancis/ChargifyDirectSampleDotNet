@@ -1,0 +1,24 @@
+﻿@model ChargifyDirectExample.MVC4.Helpers.Call
+
+@{
+    ViewBag.Title = "Receipt";
+}
+
+<h1>Receipt</h1>
+
+<p>
+    You just signed up for the @Model.response.signup.product.name Plan.
+</p>
+@if (Convert.ToInt32(decimal.Parse(Model.response.signup.subscription.signup_revenue)) == 0)
+{
+    <p>
+        No payment was due for this sign up.
+    </p>
+}
+else
+{
+    <p>
+        You were charged $@Model.response.signup.subscription.signup_revenue to the card
+        ending in @Model.response.signup.payment_profile.masked_card_number.
+    </p>
+}

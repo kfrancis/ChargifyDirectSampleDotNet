@@ -19,17 +19,20 @@ namespace ChargifyDirectExample.MVC4.Helpers
             var timestamp = helper.ViewBag.Timestamp;
             var nonce = helper.ViewBag.Nonce;
             var data = string.Format("redirect_uri={0}", urlHelper.Action("Verify", "Home", null, request.Url.Scheme, null).ToString());
-            var sigMessage = apiID + timestamp + nonce + data;
+            string sigMessage = apiID + timestamp + nonce + data;
 
-            // Encode the signature
+            return sigMessage.CalculateSignature(ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+        }
+
+        public static string CalculateSignature(this string message, string secret)
+        {
             ASCIIEncoding encoding = new ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+            byte[] keyByte = encoding.GetBytes(secret);
             HMACSHA1 hmacsha1 = new HMACSHA1(keyByte);
-            byte[] messageBytes = encoding.GetBytes(sigMessage);
+            byte[] messageBytes = encoding.GetBytes(message);
             byte[] hashMessage = hmacsha1.ComputeHash(messageBytes);
             string hexaHash = "";
             foreach (byte b in hashMessage) { hexaHash += String.Format("{0:x2}", b); }
-
             return hexaHash;
         }
     }

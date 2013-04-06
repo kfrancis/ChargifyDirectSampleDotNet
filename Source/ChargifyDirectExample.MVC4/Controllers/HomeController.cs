@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
+using ChargifyDirectExample.MVC4.Helpers;
 
 namespace ChargifyDirectExample.MVC4.Controllers
 {
@@ -25,7 +27,42 @@ namespace ChargifyDirectExample.MVC4.Controllers
         /// <returns></returns>
         public ActionResult Verify()
         {
-            return View();
+            var paramCollection = new FormCollection(Request.QueryString);
+            var chargifyResponse = new ResponseParameters(paramCollection);
+            if (chargifyResponse.isVerified)
+            {
+                var client = new Chargify2(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"]);
+                var call = client.GetCall(chargifyResponse.call_id);
+                if (call.success)
+                {
+                    return RedirectToAction("Receipt", new { call_id = call.id });
+                }
+                else
+                {
+                    return View("Index");
+                }
+            }
+            else
+            {
+                return View("Unverified");
+            }
+        }
+
+        //
+        // GET: /Home/Receipt
+
+        public ActionResult Receipt(string call_id)
+        {
+            var client = new Chargify2(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"]);
+            var call = client.GetCall(call_id);
+            if (call != null) 
+            {
+                return View(call);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         [HttpGet]

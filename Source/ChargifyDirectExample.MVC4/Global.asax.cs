@@ -24,6 +24,9 @@ namespace ChargifyDirectExample.MVC4
 
             if (string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Chargify.v2.secret"]))
                 throw new ArgumentNullException("Chargify.v2.secret", "This example requires the Chargify Direct API secret to be added to web.config");
+
+            if (string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Chargify.v2.apiPassword"]))
+                throw new ArgumentNullException("Chargify.v2.apiPassword", "This example requires the Chargify Direct API password to be added to web.config");
         }
     }
 }
