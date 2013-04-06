@@ -2,7 +2,7 @@ Chargify Direct Sample .NET
 ==========================
 
 This is a small [MVC4](http://www.asp.net/mvc) app that demonstrates how to use [Chargify Direct](http://docs.chargify.com/chargify-direct-introduction) for
-Signups.  It leverages the .NET platform to create the Direct secure form inputs and signature, verify the redirect response, and fetch the call response.
+Signups.  It leverages the .NET [Chargify2](https://github.com/kfrancis/Chargify2) library to create the Direct secure form inputs and signature, verify the redirect response, and fetch the call response.
 
 Getting Started
 ---------------
