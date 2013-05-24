@@ -42,7 +42,8 @@ namespace ChargifyDirectExample.MVC4.Controllers
                 {
                     if (call.success)
                     {
-                        return RedirectToAction("Receipt", new { call_id = call.id });
+                        TempData["call_id"] = call.id;
+                        return RedirectToAction("Receipt");
                     }
                     else
                     {
@@ -61,17 +62,18 @@ namespace ChargifyDirectExample.MVC4.Controllers
         //
         // GET: /Home/Receipt
 
-        public ActionResult Receipt(string call_id)
+        public ActionResult Receipt()
         {
-            var call = ChargifyHelper.Chargify().ReadCall(call_id);
-            if (call != null) 
+            if (TempData.ContainsKey("call_id"))
             {
-                return View(call);
+                string call_id = (string)TempData["call_id"];
+                var call = ChargifyHelper.Chargify().ReadCall(call_id);
+                if (call != null)
+                {
+                    return View(call);
+                }
             }
-            else
-            {
-                return HttpNotFound();
-            }
+            return HttpNotFound();
         }
 
         [HttpGet]
