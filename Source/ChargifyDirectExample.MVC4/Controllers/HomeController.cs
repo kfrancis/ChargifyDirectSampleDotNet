@@ -42,6 +42,9 @@ namespace ChargifyDirectExample.MVC4.Controllers
                     }
                     else
                     {
+                        ViewBag.Timestamp = ToUnixTimestamp(DateTime.Now);
+                        ViewBag.Nonce = Guid.NewGuid().ToString();
+                        ViewBag.Errors = call.Errors;
                         return View("Index");
                     }
                 }

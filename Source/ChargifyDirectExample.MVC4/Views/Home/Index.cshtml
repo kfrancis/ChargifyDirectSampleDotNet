@@ -4,6 +4,20 @@
 
 <h2>Signup for Acme Projects</h2>
 
+@if (ViewData.ContainsKey("Errors") && (((List<Chargify2.Model.Error>)ViewBag.Errors).Count > 0))
+{
+    <div class="alert alert-error">
+        <h4>Uh Oh!</h4>
+        <p>It looks like we encounted the following errors trying to create your subscription.</p>
+        <ul>
+            @foreach (var error in ((List<Chargify2.Model.Error>)ViewBag.Errors))
+            {
+                <li>@error.message</li>
+            }
+        </ul>
+    </div>
+}
+
 <form class="form-horizontal" method="post" action="https://api.chargify.com/api/v2/signups">
     @Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
         {"redirect_uri", Url.Action("Verify", "Home", null, Request.Url.Scheme, null)},
@@ -56,7 +70,7 @@
             <div class="controls">
                 <div class="input-append">
                     <input class="span2" type="text" name="signup[coupon_code]" id="signup_coupon_code" @if (ViewData.ContainsKey("coupon_code"))
-                                                                                          {<text>value="@ViewBag.coupon_code"</text>} />
+                                                                                                        {<text>value="@ViewBag.coupon_code"</text>} />
                     <button class="btn" type="button" id="verifyCoupon">Verify!</button>
                 </div>
                 <span class="help-inline">Try 'awesome'</span>
@@ -95,21 +109,21 @@
             <label class="control-label" for="signup_payment_profile_first_name">First Name on Card</label>
             <div class="controls">
                 <input type="text" name="signup[payment_profile][first_name]" id="signup_payment_profile_first_name" @if (ViewData.ContainsKey("payment_profile.first_name"))
-                                                                                                                 {<text>value="@ViewData["payment_profile.first_name"]"</text>} />
+                                                                                                                     {<text>value="@ViewData["payment_profile.first_name"]"</text>} />
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="signup_payment_profile_first_name">Last Name on Card</label>
             <div class="controls">
                 <input type="text" name="signup[payment_profile][last_name]" id="signup_payment_profile_last_name" @if (ViewData.ContainsKey("payment_profile.last_name"))
-                                                                                                               {<text>value="@ViewData["payment_profile.last_name"]"</text>} />
+                                                                                                                   {<text>value="@ViewData["payment_profile.last_name"]"</text>} />
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="signup_payment_profile_card_number">Card Number</label>
             <div class="controls">
                 <input type="text" name="signup[payment_profile][card_number]" id="signup_payment_profile_card_number" @if (ViewData.ContainsKey("payment_profile.card_number"))
-                                                                                                                   {<text>value="@ViewData["payment_profile.card_number"]"</text>} />
+                                                                                                                       {<text>value="@ViewData["payment_profile.card_number"]"</text>} />
             </div>
         </div>
         <div class="control-group row">
