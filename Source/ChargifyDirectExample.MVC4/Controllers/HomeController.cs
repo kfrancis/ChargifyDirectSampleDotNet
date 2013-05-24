@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ChargifyDirectExample.MVC4.Helpers;
 using Chargify2;
+using System.Collections.Generic;
 
 namespace ChargifyDirectExample.MVC4.Controllers
 {
@@ -17,6 +18,9 @@ namespace ChargifyDirectExample.MVC4.Controllers
         {
             ViewBag.Timestamp = ToUnixTimestamp(DateTime.Now);
             ViewBag.Nonce = Guid.NewGuid().ToString();
+            if (TempData.ContainsKey("Errors")) {
+                ViewBag.Errors = (List<Chargify2.Model.Error>)TempData["Errors"];
+            }
             return View();
         }
 
@@ -42,10 +46,8 @@ namespace ChargifyDirectExample.MVC4.Controllers
                     }
                     else
                     {
-                        ViewBag.Timestamp = ToUnixTimestamp(DateTime.Now);
-                        ViewBag.Nonce = Guid.NewGuid().ToString();
-                        ViewBag.Errors = call.Errors;
-                        return View("Index");
+                        TempData["Errors"] = call.Errors;
+                        return RedirectToAction("Index");
                     }
                 }
                 else { return HttpNotFound(); }
