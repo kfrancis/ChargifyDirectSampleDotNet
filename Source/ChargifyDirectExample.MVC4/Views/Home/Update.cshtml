@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update</h2>
+@if (ViewData.ContainsKey("Success"))
+{
+    <p>Card update was @{if(Convert.ToBoolean(ViewBag.Success)){<text>successful</text>}else{<text>unsuccessful</text>}}</p>
+}
+
+<form class="form-horizontal" method="post" action="https://api.chargify.com/api/v2/subscriptions/<subscription_id>/card_update">
+    @Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
+        {"redirect_uri", Url.Action("Verify", "Home", null, Request.Url.Scheme, null)},
+        {"nonce", ViewBag.Nonce },
+        {"timestamp", ViewBag.Timestamp.ToString()},
+        {"subscription_id", "<subscription_id>"}
+    }).ToFormInputs())
+    <div class="well">
+        <h5>About You</h5>
+        <div class="control-group">
+            <label class="control-label" for="payment_profile_first_name">First Name</label>
+            <div class="controls">
+                <input id="payment_profile_first_name" type="text" name="payment_profile[first_name]" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="payment_profile_last_name">Last Name</label>
+            <div class="controls">
+                <input id="payment_profile_last_name" type="text" name="payment_profile[last_name]" />
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <h5>Payment Profile</h5>
+        <!-- begin credit card fields -->
+        <div class="control-group">
+            <label class="control-label" for="payment_profile_card_number">Card Number</label>
+            <div class="controls">
+                <input id="payment_profile_card_number" type="text" name="payment_profile[card_number]" />
+            </div>
+        </div>
+
+        <div class="control-group row">
+            <label class="control-label span1">Expiration</label>
+            <div class="controls">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="payment_profile[expiration_month]" id="payment_profile_expiration_month" style="width:75px;">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <option value="@i">@i.ToString("D2")</option>
+                    }
+                </select>
+                <select name="payment_profile[expiration_year]" id="payment_profile_expiration_year" style="width:140px;">
+                    @for (int i = DateTime.Now.Year; i < DateTime.Now.Year + 10; i++)
+                    {
+                        <option value="@i">@i.ToString()</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="payment_profile_cvv">CVV</label>
+            <div class="controls">
+                <input id="payment_profile_cvv" type="text" name="payment_profile[cvv]" />
+            </div>
+        </div>
+
+        <!-- end credit card fields -->
+    </div>
+
+    <input type="submit" value="Update" />
+</form>

@@ -21,6 +21,8 @@ namespace ChargifyDirectExample.MVC4.Controllers
             if (TempData.ContainsKey("Errors")) {
                 ViewBag.Errors = (List<Chargify2.Model.Error>)TempData["Errors"];
             }
+            TempData["AfterVerifyPageSuccess"] = "Receipt";
+            TempData["AfterVerifyPageError"] = "Index";
             return View();
         }
 
@@ -40,15 +42,15 @@ namespace ChargifyDirectExample.MVC4.Controllers
                 var call = ChargifyHelper.Chargify().ReadCall(chargifyResponse.call_id);
                 if (call != null)
                 {
-                    if (call.success)
+                    if (call.isSuccessful)
                     {
                         TempData["call_id"] = call.id;
-                        return RedirectToAction("Receipt");
+                        return RedirectToAction((string)TempData["AfterVerifyPageSuccess"]);
                     }
                     else
                     {
                         TempData["Errors"] = call.Errors;
-                        return RedirectToAction("Index");
+                        return RedirectToAction((string)TempData["AfterVerifyPageError"]);
                     }
                 }
                 else { return HttpNotFound(); }
@@ -83,6 +85,25 @@ namespace ChargifyDirectExample.MVC4.Controllers
             // for just this quick demo.
             var result = couponCode == "awesome" ? true : false;
             return Json(new { valid = result.ToString().ToLowerInvariant() }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Update()
+        {
+            if (TempData.ContainsKey("call_id"))
+            {
+                string call_id = (string)TempData["call_id"];
+                var call = ChargifyHelper.Chargify().ReadCall(call_id);
+                if (call != null)
+                {
+                    ViewBag.Success = call.isSuccessful;
+                }
+            }
+            ViewBag.Timestamp = ToUnixTimestamp(DateTime.Now);
+            ViewBag.Nonce = Guid.NewGuid().ToString();
+            TempData["AfterVerifyPageSuccess"] = "Update";
+            TempData["AfterVerifyPageError"] = "Update";
+            return View();
         }
 
         private long ToUnixTimestamp(DateTime dt)
