@@ -7,6 +7,7 @@ namespace ChargifyDirectExample.MVC4
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new RequireHttpsAttribute());
             filters.Add(new HandleErrorAttribute());
         }
     }
