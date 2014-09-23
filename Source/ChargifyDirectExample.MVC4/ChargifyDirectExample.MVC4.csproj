@@ -44,9 +44,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chargify2, Version=1.0.4892.20408, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Chargify2, Version=1.0.5282.15440, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\chargify2.1.0.4892.20408\lib\net45\Chargify2.dll</HintPath>
+      <HintPath>..\..\packages\chargify2.1.0.5282.15440\lib\net45\Chargify2.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -162,6 +162,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Home\Unverified.cshtml" />
     <Content Include="Views\Home\Receipt.cshtml" />
+    <Content Include="Views\Home\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -217,7 +218,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
