@@ -44,9 +44,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chargify2, Version=1.0.5379.23627, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Chargify2, Version=1.0.5379.26522, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\chargify2.1.0.5379.23627\lib\net45\Chargify2.dll</HintPath>
+      <HintPath>..\..\packages\chargify2.1.0.5379.26522\lib\net45\Chargify2.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

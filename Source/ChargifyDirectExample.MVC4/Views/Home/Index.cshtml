@@ -19,12 +19,11 @@
 }
 
 <form class="form-horizontal" method="post" action="https://api.chargify.com/api/v2/signups">
-    @Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
+@Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
         {"redirect_uri", Url.Action("Verify", "Home", null, Request.Url.Scheme, null)},
         {"nonce", ViewBag.Nonce },
         {"timestamp", ViewBag.Timestamp.ToString() }
     }).ToFormInputs())
-
     <div class="well">
         <h5>Select Plan</h5>
         <div class="control-group">
