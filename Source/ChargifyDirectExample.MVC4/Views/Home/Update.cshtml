@@ -8,12 +8,12 @@
     <p>Card update was @{if(Convert.ToBoolean(ViewBag.Success)){<text>successful</text>}else{<text>unsuccessful</text>}}</p>
 }
 
-<form class="form-horizontal" method="post" action="https://api.chargify.com/api/v2/subscriptions/<subscription_id>/card_update">
+<form class="form-horizontal" method="post" action="@string.Format("https://api.chargify.com/api/v2/subscriptions/{0}/card_update", ViewBag.SubscriptionID)">
     @Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
         {"redirect_uri", Url.Action("Verify", "Home", null, Request.Url.Scheme, null)},
         {"nonce", ViewBag.Nonce },
         {"timestamp", ViewBag.Timestamp.ToString()},
-        {"subscription_id", "<subscription_id>"}
+        {"subscription_id", ViewBag.SubscriptionID.ToString()}
     }).ToFormInputs())
     <div class="well">
         <h5>About You</h5>

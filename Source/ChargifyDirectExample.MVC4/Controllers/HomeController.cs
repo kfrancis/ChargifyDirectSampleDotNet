@@ -88,8 +88,9 @@ namespace ChargifyDirectExample.MVC4.Controllers
         }
 
         [HttpGet]
-        public ActionResult Update()
+        public ActionResult Update(string id)
         {
+            if (string.IsNullOrWhiteSpace(id)) { return HttpNotFound(); }
             if (TempData.ContainsKey("call_id"))
             {
                 string call_id = (string)TempData["call_id"];
@@ -101,6 +102,7 @@ namespace ChargifyDirectExample.MVC4.Controllers
             }
             ViewBag.Timestamp = ToUnixTimestamp(DateTime.Now);
             ViewBag.Nonce = Guid.NewGuid().ToString();
+            ViewBag.SubscriptionID = id;
             TempData["AfterVerifyPageSuccess"] = "Update";
             TempData["AfterVerifyPageError"] = "Update";
             return View();
