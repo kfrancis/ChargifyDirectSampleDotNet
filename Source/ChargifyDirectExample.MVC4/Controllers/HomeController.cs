@@ -90,7 +90,6 @@ namespace ChargifyDirectExample.MVC4.Controllers
         [HttpGet]
         public ActionResult Update(string id)
         {
-            if (string.IsNullOrWhiteSpace(id)) { return HttpNotFound(); }
             if (TempData.ContainsKey("call_id"))
             {
                 string call_id = (string)TempData["call_id"];
@@ -98,8 +97,15 @@ namespace ChargifyDirectExample.MVC4.Controllers
                 if (call != null)
                 {
                     ViewBag.Success = call.isSuccessful;
+                    // After verify, we can retrieve the subscription id through the request params
+                    if (call.request != null && !string.IsNullOrWhiteSpace(call.request.id))
+                    {
+                        if (string.IsNullOrWhiteSpace(id)) { id = call.request.id; }
+                    }
                 }
             }
+            if (string.IsNullOrWhiteSpace(id)) { return HttpNotFound(); }
+
             ViewBag.Timestamp = ToUnixTimestamp(DateTime.Now);
             ViewBag.Nonce = Guid.NewGuid().ToString();
             ViewBag.SubscriptionID = id;
