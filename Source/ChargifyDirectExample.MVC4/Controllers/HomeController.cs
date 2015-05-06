@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ChargifyDirectExample.MVC4.Helpers;
 using Chargify2;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace ChargifyDirectExample.MVC4.Controllers
 {
@@ -97,6 +98,7 @@ namespace ChargifyDirectExample.MVC4.Controllers
                 if (call != null)
                 {
                     ViewBag.Success = call.isSuccessful;
+                    ViewBag.CallId = call.id;
                     // After verify, we can retrieve the subscription id through the request params
                     if (call.request != null && !string.IsNullOrWhiteSpace(call.request.id))
                     {
@@ -111,6 +113,22 @@ namespace ChargifyDirectExample.MVC4.Controllers
             ViewBag.SubscriptionID = id;
             TempData["AfterVerifyPageSuccess"] = "Update";
             TempData["AfterVerifyPageError"] = "Update";
+            return View();
+        }
+
+        /// <summary>
+        /// Allow call information to be seen, useful for debugging.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Call(string id)
+        {
+            var call = ChargifyHelper.Chargify().ReadCall(id);
+            if (call != null)
+            {
+                var serializer = new JavaScriptSerializer();
+                ViewBag.Result = serializer.Serialize(call);
+            }
             return View();
         }
 

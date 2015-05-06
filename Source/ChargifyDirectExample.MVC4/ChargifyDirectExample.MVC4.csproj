@@ -163,6 +163,7 @@
     <Content Include="Views\Home\Unverified.cshtml" />
     <Content Include="Views\Home\Receipt.cshtml" />
     <Content Include="Views\Home\Update.cshtml" />
+    <Content Include="Views\Home\Call.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
