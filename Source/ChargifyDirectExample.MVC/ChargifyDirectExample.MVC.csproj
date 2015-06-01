@@ -51,9 +51,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chargify2, Version=1.0.5379.26522, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\chargify2.1.0.5379.26522\lib\net45\Chargify2.dll</HintPath>
+    <Reference Include="Chargify2, Version=1.0.5630.19705, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\chargify2.1.0.5630.19705\lib\net45\Chargify2.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -134,6 +134,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,7 +171,8 @@
     <Content Include="Views\Home\Unverified.cshtml" />
     <Content Include="Views\Home\Receipt.cshtml" />
     <Content Include="Views\Home\Update.cshtml" />
-    <Content Include="Views\Home\Call.cshtml" />
+    <Content Include="Views\Call\ShowAsync.cshtml" />
+    <Content Include="Views\Call\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -116,22 +116,6 @@ namespace ChargifyDirectExample.MVC.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Allow call information to be seen, useful for debugging.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult Call(string id)
-        {
-            var call = ChargifyHelper.Chargify().ReadCall(id);
-            if (call != null)
-            {
-                var serializer = new JavaScriptSerializer();
-                ViewBag.Result = serializer.Serialize(call);
-            }
-            return View();
-        }
-
         private long ToUnixTimestamp(DateTime dt)
         {
             DateTime unixRef = new DateTime(1970, 1, 1, 0, 0, 0);
