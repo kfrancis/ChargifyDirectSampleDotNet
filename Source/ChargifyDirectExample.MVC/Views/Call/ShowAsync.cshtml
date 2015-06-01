@@ -2,9 +2,22 @@
     ViewBag.Title = "Async Call";
 }
 
+@section head {
+    <style type="text/css">
+         .string { color: green; } 
+         .number { color: darkorange; } 
+         .boolean { color: blue; } 
+         .null { color: magenta; } 
+         .key { color: red; }
+    </style>
+}
+
 <h2>Call (Read Async)</h2>
 
-<div id="result"></div>
+<div id="resultDiv">
+    <pre id="result">
+    </pre>
+</div>
 
 <p><small><a href="@Url.Action("Show", "Call", new { id = ViewContext.RouteData.Values["id"]})">View raw call information (sync)</a></small></p>
 
