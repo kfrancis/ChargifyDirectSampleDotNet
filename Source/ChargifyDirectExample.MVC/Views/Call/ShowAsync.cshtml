@@ -6,7 +6,7 @@
 
 <div id="result"></div>
 
-<p><small><a href="@Url.Action("Show", "Call", new {id = Model.id})">View raw call information (sync)</a></small></p>
+<p><small><a href="@Url.Action("Show", "Call", new { id = ViewContext.RouteData.Values["id"]})">View raw call information (sync)</a></small></p>
 
 @section scripts {
     <script type="text/javascript">
