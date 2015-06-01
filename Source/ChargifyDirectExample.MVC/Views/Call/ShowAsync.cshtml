@@ -36,7 +36,7 @@
     {
         <script type="text/javascript">
             var json = '@Html.Raw(Html.Encode(ViewBag.Result))';
-            $("#result").text(syntaxHighlight(json));
+            $("#result").append(syntaxHighlight(json));
         </script>
     }
 }
