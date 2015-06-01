@@ -51,8 +51,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chargify2, Version=1.0.5630.19705, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\chargify2.1.0.5630.19705\lib\net45\Chargify2.dll</HintPath>
+    <Reference Include="Chargify2, Version=1.0.5630.19667, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\chargify2.1.0.5630.19667\lib\net45\Chargify2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -63,8 +63,9 @@
     <Reference Include="NotFoundMvc">
       <HintPath>..\..\packages\NotFoundMvc.1.0.0\lib\net40\NotFoundMvc.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
