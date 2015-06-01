@@ -13,7 +13,7 @@ namespace ChargifyDirectExample.MVC.Controllers
     {
         //
         // GET: /Call/ShowAsync/4dbc42ecc21d93ec8f9bb581346dd41c5c3c2cf5
-
+        [ActionName("ShowAsync")]
         public async Task<ActionResult> ShowAsync(string id)
         {
             var result = await ChargifyHelper.Chargify().ReadCallAsync(id).ConfigureAwait(false);
@@ -29,7 +29,7 @@ namespace ChargifyDirectExample.MVC.Controllers
 
         //
         // GET: /Call/Show/4dbc42ecc21d93ec8f9bb581346dd41c5c3c2cf5
-
+        [ActionName("Show")]
         public ActionResult Show(string id)
         {
             var call = ChargifyHelper.Chargify().ReadCall(id);
