@@ -1,74 +1,87 @@
 ﻿@{
-    ViewBag.Title = "Update";
+    ViewBag.Title = "Card Update";
 }
 
-<h2>Update</h2>
+<h2>Card Update</h2>
 @if (ViewData.ContainsKey("Success"))
 {
-    <p>Card update was @{if(Convert.ToBoolean(ViewBag.Success)){<text>successful</text>}else{<text>unsuccessful</text>}}</p>
+    <p>Card update was @{if (Convert.ToBoolean(ViewBag.Success))
+    {<text>successful</text>}
+    else
+    {<text>unsuccessful</text>}}</p>
 }
 
-<form class="form-horizontal" method="post" action="@string.Format("https://api.chargify.com/api/v2/subscriptions/{0}/card_update", ViewBag.SubscriptionID)">
+<form class="form-horizontal" role="form" method="post" action="@string.Format("https://api.chargify.com/api/v2/subscriptions/{0}/card_update", ViewBag.SubscriptionID)">
     @Html.Raw(ChargifyHelper.Chargify().Direct.SecureParameters(new System.Collections.Hashtable(){
         {"redirect_uri", Url.Action("Verify", "Home", null, Request.Url.Scheme, null)},
         {"nonce", ViewBag.Nonce },
         {"timestamp", ViewBag.Timestamp.ToString()},
         {"subscription_id", ViewBag.SubscriptionID.ToString()}
     }).ToFormInputs())
-    <div class="well">
-        <h5>About You</h5>
-        <div class="control-group">
-            <label class="control-label" for="payment_profile_first_name">First Name</label>
-            <div class="controls">
-                <input id="payment_profile_first_name" type="text" name="payment_profile[first_name]" />
+    <div class="panel panel-default">
+        <div class="panel-heading">About You</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="payment_profile_first_name">First Name</label>
+                <div class="col-xs-9">
+                    <input class="form-control" id="payment_profile_first_name" type="text" name="payment_profile[first_name]" />
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="payment_profile_last_name">Last Name</label>
-            <div class="controls">
-                <input id="payment_profile_last_name" type="text" name="payment_profile[last_name]" />
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="payment_profile_last_name">Last Name</label>
+                <div class="col-xs-9">
+                    <input class="form-control" id="payment_profile_last_name" type="text" name="payment_profile[last_name]" />
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="well">
-        <h5>Payment Profile</h5>
-        <!-- begin credit card fields -->
-        <div class="control-group">
-            <label class="control-label" for="payment_profile_card_number">Card Number</label>
-            <div class="controls">
-                <input id="payment_profile_card_number" type="text" name="payment_profile[card_number]" />
+    <div class="panel panel-default">
+        <div class="panel-heading">Payment Profile</div>
+        <div class="panel-body">
+            <!-- begin credit card fields -->
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="payment_profile_card_number">Card Number</label>
+                <div class="col-xs-9">
+                    <input class="form-control" id="payment_profile_card_number" type="text" name="payment_profile[card_number]" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Expiration</label>
+                <div class="col-xs-9 input-group">
+                    <span class="input-group-btn">
+                        <select class="form-control" name="payment_profile[expiration_month]" id="payment_profile_expiration_month" style="width:75px;">
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i">@i.ToString("D2")</option>
+                            }
+                        </select>
+                    </span>
+                    <span class="input-group-btn">
+                        <select class="form-control" name="payment_profile[expiration_year]" id="payment_profile_expiration_year" style="width:140px;">
+                            @for (int i = DateTime.Now.Year; i < DateTime.Now.Year + 10; i++)
+                            {
+                                <option value="@i">@i.ToString()</option>
+                            }
+                        </select>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="payment_profile_cvv">CVV</label>
+                <div class="col-xs-9">
+                    <input class="form-control" id="payment_profile_cvv" type="text" name="payment_profile[cvv]" />
+                </div>
             </div>
         </div>
-
-        <div class="control-group row">
-            <label class="control-label span1">Expiration</label>
-            <div class="controls">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <select name="payment_profile[expiration_month]" id="payment_profile_expiration_month" style="width:75px;">
-                    @for (int i = 1; i <= 12; i++)
-                    {
-                        <option value="@i">@i.ToString("D2")</option>
-                    }
-                </select>
-                <select name="payment_profile[expiration_year]" id="payment_profile_expiration_year" style="width:140px;">
-                    @for (int i = DateTime.Now.Year; i < DateTime.Now.Year + 10; i++)
-                    {
-                        <option value="@i">@i.ToString()</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="payment_profile_cvv">CVV</label>
-            <div class="controls">
-                <input id="payment_profile_cvv" type="text" name="payment_profile[cvv]" />
-            </div>
-        </div>
-
         <!-- end credit card fields -->
     </div>
 
-    <input type="submit" value="Update" />
+    <p>
+        <input type="submit" value="Update" class="btn btn-lg btn-primary" />
+        &nbsp;
+    </p>
+    &nbsp;
 </form>

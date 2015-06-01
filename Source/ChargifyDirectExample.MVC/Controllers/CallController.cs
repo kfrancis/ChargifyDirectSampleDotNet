@@ -16,7 +16,7 @@ namespace ChargifyDirectExample.MVC.Controllers
         [ActionName("ShowAsync")]
         public async Task<ActionResult> ShowAsync(string id)
         {
-            var result = await ChargifyHelper.Chargify().ReadCallAsync(id).ConfigureAwait(false);
+            var result = await ChargifyHelper.Chargify().ReadCallAsync(id);
 
             if (result != null)
             {
