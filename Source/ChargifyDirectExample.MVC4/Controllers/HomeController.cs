@@ -3,12 +3,12 @@ using System.Collections;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using ChargifyDirectExample.MVC4.Helpers;
+using ChargifyDirectExample.MVC.Helpers;
 using Chargify2;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
 
-namespace ChargifyDirectExample.MVC4.Controllers
+namespace ChargifyDirectExample.MVC.Controllers
 {
     public class HomeController : Controller
     {

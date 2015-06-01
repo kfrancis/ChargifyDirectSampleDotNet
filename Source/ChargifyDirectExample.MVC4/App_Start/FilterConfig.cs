@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace ChargifyDirectExample.MVC4
+namespace ChargifyDirectExample.MVC
 {
     public class FilterConfig
     {

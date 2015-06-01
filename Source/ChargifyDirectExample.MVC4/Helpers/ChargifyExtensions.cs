@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using Chargify2;
 using Chargify2.Configuration;
 
-namespace ChargifyDirectExample.MVC4.Helpers
+namespace ChargifyDirectExample.MVC.Helpers
 {
     public class ChargifyHelper
     {
