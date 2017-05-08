@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
 using Chargify2;
-using Chargify2.Configuration;
 
 namespace ChargifyDirectExample.MVC.Helpers
 {
@@ -15,7 +14,9 @@ namespace ChargifyDirectExample.MVC.Helpers
     {
         public static Client Chargify()
         {
-            return new Client(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"], ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+            var chargifyClient = new Client(ConfigurationManager.AppSettings["Chargify.v2.apiKey"], ConfigurationManager.AppSettings["Chargify.v2.apiPassword"], ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            return chargifyClient;
         }
     }
 
@@ -34,13 +35,20 @@ namespace ChargifyDirectExample.MVC.Helpers
             var request = helper.ViewContext.RequestContext.HttpContext.Request;
 
             // Collect the params needed for the signature
-            var apiID = ConfigurationManager.AppSettings["Chargify.v2.apiKey"];
+            var apiId = ConfigurationManager.AppSettings["Chargify.v2.apiKey"];
             var timestamp = helper.ViewBag.Timestamp;
             var nonce = helper.ViewBag.Nonce;
-            var data = string.Format("redirect_uri={0}", urlHelper.Action("Verify", "Home", null, request.Url.Scheme, null).ToString());
-            string sigMessage = apiID + timestamp + nonce + data;
+            if (request.Url != null)
+            {
+                var data = $"redirect_uri={urlHelper.Action("Verify", "Home", null, request.Url.Scheme, null)}";
+                string sigMessage = apiId + timestamp + nonce + data;
 
-            return sigMessage.CalculateSignature(ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+                return Utils.CalculateSignature(sigMessage, ConfigurationManager.AppSettings["Chargify.v2.secret"]);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         public static string CalculateSignature(this string message, string secret)
@@ -51,7 +59,7 @@ namespace ChargifyDirectExample.MVC.Helpers
             byte[] messageBytes = encoding.GetBytes(message);
             byte[] hashMessage = hmacsha1.ComputeHash(messageBytes);
             string hexaHash = "";
-            foreach (byte b in hashMessage) { hexaHash += String.Format("{0:x2}", b); }
+            foreach (byte b in hashMessage) { hexaHash += $"{b:x2}"; }
             return hexaHash;
         }
     }

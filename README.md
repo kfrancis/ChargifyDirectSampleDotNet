@@ -23,6 +23,6 @@ Features
 ##Demo##
 This code has been deployed [here](https://chargify-direct-sample.azurewebsites.net) for your convenience, so you can create test subscriptions.
 
-You can try a sample live update endpoint [here](https://chargify-direct-sample.azurewebsites.net/Home/Update/6548218).
+You can try a sample live update endpoint [here](https://chargify-direct-sample.azurewebsites.net/Home/Update/17723461).
 
 For v1 API access, try the [Chargify.NET wrapper](http://chargify.codeplex.com).
