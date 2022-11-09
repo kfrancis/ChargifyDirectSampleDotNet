@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C8B6174-E3BC-457E-997D-ACA3242BA1CD}"
 	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
 		NuGet.config = NuGet.config
 		README.md = README.md
 	EndProjectSection
@@ -24,5 +25,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92814AB2-33D3-467E-B91D-12770A0B4941}
 	EndGlobalSection
 EndGlobal
